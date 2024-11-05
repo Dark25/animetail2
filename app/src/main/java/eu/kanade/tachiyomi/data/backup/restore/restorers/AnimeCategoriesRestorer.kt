@@ -21,11 +21,40 @@ class AnimeCategoriesRestorer(
 
             val categories = backupCategories
                 .sortedBy { it.order }
+                .distinctBy { it.name }
                 .map {
                     val dbCategory = dbCategoriesByName[it.name]
                     if (dbCategory != null) return@map dbCategory
                     val order = nextOrder++
                     animeHandler.awaitOneExecutable {
+                        categoriesQueries.insert(it.name, order, it.flags)
+                        categoriesQueries.selectLastInsertedRowId()
+                    }
+                        .let { id -> it.toCategory(id).copy(order = order) }
+                }
+
+            libraryPreferences.categorizedDisplaySettings().set(
+                (dbCategories + categories)
+                    .distinctBy { it.flags }
+                    .size > 1,
+            )
+        }
+    }
+
+    suspend fun restoreMangaCategories(backupCategories: List<BackupCategory>) {
+        if (backupCategories.isNotEmpty()) {
+            val dbCategories = getMangaCategories.await()
+            val dbCategoriesByName = dbCategories.associateBy { it.name }
+            var nextOrder = dbCategories.maxOfOrNull { it.order }?.plus(1) ?: 0
+
+            val categories = backupCategories
+                .sortedBy { it.order }
+                .distinctBy { it.name }
+                .map {
+                    val dbCategory = dbCategoriesByName[it.name]
+                    if (dbCategory != null) return@map dbCategory
+                    val order = nextOrder++
+                    mangaHandler.awaitOneExecutable {
                         categoriesQueries.insert(it.name, order, it.flags)
                         categoriesQueries.selectLastInsertedRowId()
                     }
