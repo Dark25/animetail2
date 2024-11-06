@@ -166,6 +166,7 @@ private fun ChapterNavigatorPreview() {
             onPreviousChapter = {},
             enabledPrevious = true,
             currentPage = currentPage,
+            currentPageText = currentPage.toString(),
             totalPages = 10,
             onPageIndexChange = { currentPage = (it + 1) },
         )

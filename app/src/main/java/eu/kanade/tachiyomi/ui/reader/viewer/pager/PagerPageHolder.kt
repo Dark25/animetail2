@@ -86,12 +86,6 @@ class PagerPageHolder(
         extraLoadJob = null
     }
 
-    private fun initProgressIndicator() {
-        if (progressIndicator == null) {
-            progressIndicator = ReaderProgressIndicator(context)
-            addView(progressIndicator)
-        }
-    }
 
     private fun initProgressIndicator() {
         if (progressIndicator == null) {
@@ -169,7 +163,7 @@ class PagerPageHolder(
         if (extraPage == null) {
             progressIndicator?.setProgress(0)
         } else {
-            progressIndicator.setProgress(95)
+            progressIndicator?.setProgress(95)
         }
 
         val streamFn = page.stream ?: return
@@ -297,7 +291,7 @@ class PagerPageHolder(
             return imageSource
         }
 
-        scope.launch { progressIndicator.setProgress(96) }
+        scope.launch { progressIndicator?.setProgress(96) }
         if (imageBitmap.height < imageBitmap.width) {
             imageSource2.close()
             page.fullPage = true
@@ -315,7 +309,7 @@ class PagerPageHolder(
             return imageSource
         }
 
-        scope.launch { progressIndicator.setProgress(97) }
+        scope.launch { progressIndicator?.setProgress(97) }
         if (imageBitmap2.height < imageBitmap2.width) {
             imageSource2.close()
             extraPage?.fullPage = true
@@ -375,9 +369,9 @@ class PagerPageHolder(
     private fun updateProgress(progress: Int) {
         scope.launch {
             if (progress == 100) {
-                progressIndicator.hide()
+                progressIndicator?.hide()
             } else {
-                progressIndicator.setProgress(progress)
+                progressIndicator?.setProgress(progress)
             }
         }
     }

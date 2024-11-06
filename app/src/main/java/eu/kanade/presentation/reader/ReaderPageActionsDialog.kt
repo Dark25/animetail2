@@ -31,9 +31,9 @@ fun ReaderPageActionsDialog(
     onDismissRequest: () -> Unit,
     // SY -->
     onSetAsCover: (useExtraPage: Boolean) -> Unit,
-    onShare: (useExtraPage: BooleanBoolean) -> Unit,
+    onShare: (copy: Boolean, useExtraPage: Boolean) -> Unit,
     onSave: (useExtraPage: Boolean) -> Unit,
-    onShareCombined: () -> Unit,
+    onShareCombined: (copy: Boolean) -> Unit,
     onSaveCombined: () -> Unit,
     hasExtraPage: Boolean,
     // SY <--
@@ -67,7 +67,7 @@ fun ReaderPageActionsDialog(
                 title = stringResource(MR.strings.action_copy_to_clipboard),
                 icon = Icons.Outlined.ContentCopy,
                 onClick = {
-                    onShare(true)
+                    onShare(true, false)
                     onDismissRequest()
                 },
             )
@@ -76,7 +76,7 @@ fun ReaderPageActionsDialog(
                 title = stringResource(MR.strings.action_copy_to_clipboard),
                 icon = Icons.Outlined.ContentCopy,
                 onClick = {
-                    onShare(true)
+                    onShare(true, false)
                     onDismissRequest()
                 },
             )
@@ -94,7 +94,7 @@ fun ReaderPageActionsDialog(
                 icon = Icons.Outlined.Share,
                 onClick = {
                     // SY -->
-                    onShare(false)
+                    onShare(false, false)
                     // SY <--
                     onDismissRequest()
                 },
@@ -137,7 +137,7 @@ fun ReaderPageActionsDialog(
                     title = stringResource(MR.strings.action_share_second_page),
                     icon = Icons.Outlined.Share,
                     onClick = {
-                        onShare(true)
+                        onShare(false, true)
                         onDismissRequest()
                     },
                 )
@@ -159,7 +159,7 @@ fun ReaderPageActionsDialog(
                     title = stringResource(MR.strings.action_share_combined_page),
                     icon = Icons.Outlined.Share,
                     onClick = {
-                        onShareCombined()
+                        onShareCombined(true)
                         onDismissRequest()
                     },
                 )

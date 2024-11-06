@@ -887,7 +887,6 @@ class ReaderViewModel @JvmOverloads constructor(
     }
 
     // SY -->
-    @Suppress("ReturnCount")
     fun saveImages() {
         val (firstPage, secondPage) = (state.value.dialog as? Dialog.PageActions ?: return)
         val viewer = state.value.viewer as? PagerViewer ?: return
@@ -922,7 +921,6 @@ class ReaderViewModel @JvmOverloads constructor(
         }
     }
 
-    @Suppress("LongParameterList", "TooGenericExceptionThrown")
     private fun saveImages(
         page1: ReaderPage,
         page2: ReaderPage,
@@ -963,7 +961,7 @@ class ReaderViewModel @JvmOverloads constructor(
      * get a path to the file and it has to be decompressed somewhere first. Only the last shared
      * image will be kept so it won't be taking lots of internal disk space.
      */
-    fun shareImage(useExtraPage: BooleancopyToClipboard: Boolean) {
+    fun shareImage(copyToClipboard: Boolean, useExtraPage: Boolean) {
         // SY -->
         val page = if (useExtraPage) {
             (state.value.dialog as? Dialog.PageActions)?.extraPage
@@ -997,8 +995,7 @@ class ReaderViewModel @JvmOverloads constructor(
     }
 
     // SY -->
-    @Suppress("ReturnCount")
-    fun shareImages() {
+    fun shareImages(copyToClipboard: Boolean) {
         val (firstPage, secondPage) = (state.value.dialog as? Dialog.PageActions ?: return)
         val viewer = state.value.viewer as? PagerViewer ?: return
         val isLTR = (viewer !is R2LPagerViewer) xor (viewer.config.invertDoublePages)
@@ -1022,7 +1019,7 @@ class ReaderViewModel @JvmOverloads constructor(
                     location = Location.Cache,
                     manga = manga,
                 )
-                eventChannel.send(Event.ShareImage(uri, firstPage, secondPage))
+                eventChannel.send(if (copyToClipboard) Event.CopyImage(uri) else Event.ShareImage(uri, firstPage, secondPage))
             }
         } catch (e: Throwable) {
             logcat(LogPriority.ERROR, e)

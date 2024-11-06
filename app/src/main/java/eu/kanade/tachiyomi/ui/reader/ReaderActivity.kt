@@ -259,7 +259,7 @@ class ReaderActivity : BaseActivity() {
                         onSaveImageResult(event.result)
                     }
                     is ReaderViewModel.Event.ShareImage -> {
-                        onShareImageResult(event.uri, event.page, event.secondPage)
+                        onShareImageResult(event.uri, event.page /* SY --> */, event.secondPage /* SY <-- */)
                     }
                     is ReaderViewModel.Event.CopyImage -> {
                         onCopyImageResult(event.uri)

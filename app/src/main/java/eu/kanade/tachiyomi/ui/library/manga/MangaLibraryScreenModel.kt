@@ -351,9 +351,6 @@ class MangaLibraryScreenModel(
         }
 
         return mapValues { (key, value) ->
-         // SY -->
-            val isAscending = groupSort?.isAscending ?: keys.find { it.id == entry.key.id }!!.sort.isAscending
-            // SY <--
             if (key.sort.type == MangaLibrarySort.Type.Random) {
                 return@mapValues value.shuffled(Random(libraryPreferences.randomMangaSortSeed().get()))
             }
