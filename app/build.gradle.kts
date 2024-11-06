@@ -286,7 +286,7 @@ dependencies {
     // true type parser
     implementation(libs.truetypeparser)
     // torrserver
-	implementation(libs.torrentserver)
+    implementation(libs.torrentserver)
     // Cast
     implementation(libs.bundles.cast)
 }

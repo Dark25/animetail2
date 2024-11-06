@@ -272,7 +272,6 @@ private fun AnimeUpdatesUiItem(
         }
         // <-- AM (FILE_SIZE)
 
-
         EpisodeDownloadIndicator(
             enabled = onDownloadEpisode != null,
             modifier = Modifier.padding(start = 4.dp),
@@ -305,6 +304,7 @@ private fun formatProgress(milliseconds: Long): String {
         )
     }
 }
+
 // AM (FILE_SIZE) -->
 private val storagePreferences: StoragePreferences by injectLazy()
 private val animeDownloadProvider: AnimeDownloadProvider by injectLazy()

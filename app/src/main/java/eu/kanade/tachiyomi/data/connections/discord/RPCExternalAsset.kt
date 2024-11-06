@@ -19,14 +19,14 @@ class RPCExternalAsset(
     applicationId: String,
     private val token: String,
     private val client: OkHttpClient,
-    private val json: Json
+    private val json: Json,
 ) {
 
     @Serializable
     data class ExternalAsset(
         val url: String? = null,
         @SerialName("external_asset_path")
-        val externalAssetPath: String? = null
+        val externalAssetPath: String? = null,
     )
 
     private val api = "https://discord.com/api/v9/applications/$applicationId/external-assets"

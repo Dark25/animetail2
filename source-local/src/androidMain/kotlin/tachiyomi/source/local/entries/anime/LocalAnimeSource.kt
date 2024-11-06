@@ -130,7 +130,6 @@ actual class LocalAnimeSource(
                         // Try to find the cover
                         coverManager.find(animeDir.name.orEmpty())?.let {
                             thumbnail_url = it.uri.toString()
-
                         }
                     }
                 }

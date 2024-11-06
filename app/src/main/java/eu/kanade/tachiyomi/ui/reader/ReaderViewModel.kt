@@ -182,21 +182,21 @@ class ReaderViewModel @JvmOverloads constructor(
                                     manga.downloadedFilterRaw ==
                                         Manga.CHAPTER_SHOW_DOWNLOADED &&
                                         !downloadManager.isChapterDownloaded(
-                                        it.name,
-                                        it.scanlator,
-                                        manga.title,
-                                        manga.source,
-                                    )
+                                            it.name,
+                                            it.scanlator,
+                                            manga.title,
+                                            manga.source,
+                                        )
                                     ) ||
                                 (
                                     manga.downloadedFilterRaw ==
                                         Manga.CHAPTER_SHOW_NOT_DOWNLOADED &&
                                         downloadManager.isChapterDownloaded(
-                                        it.name,
-                                        it.scanlator,
-                                        manga.title,
-                                        manga.source,
-                                    )
+                                            it.name,
+                                            it.scanlator,
+                                            manga.title,
+                                            manga.source,
+                                        )
                                     ) ||
                                 (manga.bookmarkedFilterRaw == Manga.CHAPTER_SHOW_BOOKMARKED && !it.bookmark) ||
                                 (manga.bookmarkedFilterRaw == Manga.CHAPTER_SHOW_NOT_BOOKMARKED && it.bookmark)
@@ -1019,7 +1019,9 @@ class ReaderViewModel @JvmOverloads constructor(
                     location = Location.Cache,
                     manga = manga,
                 )
-                eventChannel.send(if (copyToClipboard) Event.CopyImage(uri) else Event.ShareImage(uri, firstPage, secondPage))
+                eventChannel.send(
+                    if (copyToClipboard) Event.CopyImage(uri) else Event.ShareImage(uri, firstPage, secondPage),
+                )
             }
         } catch (e: Throwable) {
             logcat(LogPriority.ERROR, e)

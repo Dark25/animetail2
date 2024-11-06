@@ -105,7 +105,7 @@ fun ChapterNavigator(
                         // SY -->
                         Box(contentAlignment = Alignment.CenterEnd) {
                             Text(text = currentPageText)
-                        // SY <--
+                            // SY <--
                             // Taking up full length so the slider doesn't shift when 'currentPage' length changes
                             Text(text = totalPages.toString(), color = Color.Transparent)
                         }

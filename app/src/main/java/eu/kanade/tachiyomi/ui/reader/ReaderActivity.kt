@@ -259,7 +259,7 @@ class ReaderActivity : BaseActivity() {
                         onSaveImageResult(event.result)
                     }
                     is ReaderViewModel.Event.ShareImage -> {
-                        onShareImageResult(event.uri, event.page /* SY --> */, event.secondPage /* SY <-- */)
+                        onShareImageResult(event.uri, event.page, event.secondPage)
                     }
                     is ReaderViewModel.Event.CopyImage -> {
                         onCopyImageResult(event.uri)
@@ -1062,12 +1062,13 @@ class ReaderActivity : BaseActivity() {
                 .onEach {
                     if (viewModel.state.value.viewer !is PagerViewer) return@onEach
                     reloadChapters(
-                        !it && when (readerPreferences.pageLayout().get()) {
-                            PagerConfig.PageLayout.DOUBLE_PAGES -> true
-                            PagerConfig.PageLayout.AUTOMATIC ->
-                                resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-                            else -> false
-                        },
+                        !it &&
+                            when (readerPreferences.pageLayout().get()) {
+                                PagerConfig.PageLayout.DOUBLE_PAGES -> true
+                                PagerConfig.PageLayout.AUTOMATIC ->
+                                    resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+                                else -> false
+                            },
                         true,
                     )
                 }

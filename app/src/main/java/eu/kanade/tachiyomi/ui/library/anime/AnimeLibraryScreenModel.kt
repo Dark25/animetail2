@@ -307,7 +307,7 @@ class AnimeLibraryScreenModel(
         }
 
         fun AnimeLibrarySort.comparator(): Comparator<AnimeLibraryItem> = Comparator { i1, i2 ->
-         // SY -->
+            // SY -->
             val sort = groupSort ?: keys.find { it.id == i1.libraryAnime.category }!!.sort
             // SY <--
             when (this.type) {
@@ -881,8 +881,7 @@ class AnimeLibraryScreenModel(
                     item.libraryAnime.anime.genre?.distinct() ?: emptyList()
                 }
                 libraryAnime.flatMap { item ->
-                    item.libraryAnime.anime.genre?.distinct()?.map {
-                            genre ->
+                    item.libraryAnime.anime.genre?.distinct()?.map { genre ->
                         Pair(genre, item)
                     } ?: emptyList()
                 }.groupBy({ it.first }, { it.second }).filterValues { it.size > 3 }

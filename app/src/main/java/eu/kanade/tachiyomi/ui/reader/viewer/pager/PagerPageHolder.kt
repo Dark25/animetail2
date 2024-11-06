@@ -86,7 +86,6 @@ class PagerPageHolder(
         extraLoadJob = null
     }
 
-
     private fun initProgressIndicator() {
         if (progressIndicator == null) {
             progressIndicator = ReaderProgressIndicator(context)
@@ -233,7 +232,7 @@ class PagerPageHolder(
             return splitInHalf(imageSource)
         }
         val isDoublePage = ImageUtil.isWideImage(
-            imageSource
+            imageSource,
         )
         if (!isDoublePage) {
             return imageSource
@@ -246,7 +245,7 @@ class PagerPageHolder(
 
     private fun rotateDualPage(imageSource: BufferedSource): BufferedSource {
         val isDoublePage = ImageUtil.isWideImage(
-            imageSource
+            imageSource,
         )
         return if (isDoublePage) {
             val rotation = if (viewer.config.dualPageRotateToFitInvert) -90f else 90f
@@ -262,7 +261,7 @@ class PagerPageHolder(
         "MagicNumber",
         "LongMethod",
         "CyclomaticComplexMethod",
-        "ComplexCondition"
+        "ComplexCondition",
     )
     private fun mergePages(imageSource: BufferedSource, imageSource2: BufferedSource?): BufferedSource {
         // Handle adding a center margin to wide images if requested
@@ -408,7 +407,8 @@ class PagerPageHolder(
                 viewer.config.centerMarginType and PagerConfig.CenterMarginType
                     .DOUBLE_PAGE_CENTER_MARGIN
                 ) > 0 &&
-            viewer.config.doublePages && !viewer.config.imageCropBorders
+            viewer.config.doublePages &&
+            !viewer.config.imageCropBorders
         ) {
             48
         } else {
