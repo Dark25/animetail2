@@ -209,12 +209,6 @@ class BackupCreator(
         return customButtonBackupCreator()
     }
 
-    private suspend fun backupCustomButtons(options: BackupOptions): List<BackupCustomButtons> {
-        if (!options.customButton) return emptyList()
-
-        return customButtonBackupCreator()
-    }
-
     fun backupSourcePreferences(options: BackupOptions): List<BackupSourcePreferences> {
         if (!options.sourceSettings) return emptyList()
 
