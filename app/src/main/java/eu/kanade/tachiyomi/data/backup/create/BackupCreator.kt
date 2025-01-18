@@ -209,11 +209,7 @@ class BackupCreator(
         return customButtonBackupCreator()
     }
 
-<<<<<<< HEAD
-    private fun backupSourcePreferences(options: BackupOptions): List<BackupSourcePreferences> {
-=======
-    fun backupSourcePreferences(options: BackupOptions): List<BackupSourcePreferences> {
->>>>>>> master
+   fun backupSourcePreferences(options: BackupOptions): List<BackupSourcePreferences> {
         if (!options.sourceSettings) return emptyList()
 
         return preferenceBackupCreator.createSource(includePrivatePreferences = options.privateSettings)
