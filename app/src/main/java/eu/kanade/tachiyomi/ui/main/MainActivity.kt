@@ -97,6 +97,7 @@ import eu.kanade.tachiyomi.ui.more.NewUpdateScreen
 import eu.kanade.tachiyomi.ui.more.OnboardingScreen
 import eu.kanade.tachiyomi.ui.player.ExternalIntents
 import eu.kanade.tachiyomi.ui.player.PlayerActivity
+import eu.kanade.tachiyomi.ui.player.cast.CastMiniController
 import eu.kanade.tachiyomi.util.system.dpToPx
 import eu.kanade.tachiyomi.util.system.isNavigationBarNeedsScrim
 import eu.kanade.tachiyomi.util.system.openInBrowser
@@ -134,6 +135,9 @@ class MainActivity : BaseActivity() {
     private val downloadCache: MangaDownloadCache by injectLazy()
     private val chapterCache: ChapterCache by injectLazy()
 
+    // Cast support
+    val castManager: MainCastManager by lazy { MainCastManager(this) }
+
     // To be checked by splash screen. If true then splash screen will be removed.
     var ready = false
 
@@ -154,6 +158,8 @@ class MainActivity : BaseActivity() {
         val splashScreen = if (isLaunch) installSplashScreen() else null
 
         super.onCreate(savedInstanceState)
+
+        castManager // Initialize castManager
 
         val didMigration = Migrator.awaitAndRelease()
 
@@ -229,6 +235,15 @@ class MainActivity : BaseActivity() {
                                 .padding(contentPadding)
                                 .consumeWindowInsets(contentPadding),
                         )
+
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.BottomCenter)
+                                .fillMaxWidth()
+                        ) {
+                            CastMiniController()
+                        }
+
                         // Draw navigation bar scrim when needed
                         if (remember { isNavigationBarNeedsScrim() }) {
                             Spacer(
@@ -335,6 +350,12 @@ class MainActivity : BaseActivity() {
                 ExternalIntents.externalIntents.onActivityResult(this@MainActivity, result.data)
             }
         }
+    }
+
+    override fun onDestroy() {
+        // Terminamos la sesión solo cuando la app se cierra completamente
+        castManager.cleanup(endSession = true)
+        super.onDestroy()
     }
 
     override fun onProvideAssistContent(outContent: AssistContent) {
